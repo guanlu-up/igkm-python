@@ -1,10 +1,12 @@
 import rfc_server
+from key_mapper import KEY2CODE
 
 
 class BaseKeyboard(object):
     """键盘的模拟操作"""
 
     def __init__(self, server_url=None):
+        """接收应用服务的URL, 可以是远程也可以是本地,None则表示本地"""
         self.server = rfc_server.RFC(server_url)
 
     @staticmethod
@@ -162,3 +164,24 @@ class BaseKeyboard(object):
         response = self.server.request(params=params)
         return response["result"]
 
+
+class AgileKeyboard(BaseKeyboard):
+
+    def __init__(self, server_url=None, min_delay="300", max_delay="300"):
+        """增加输入字符之间的延时"""
+        super().__init__(server_url)
+        self.set_input_string_interval_time(min_delay, max_delay)
+
+    def send_hotkey(self, hotkey: str):
+        """发送快捷键,如有多个热键使用+拼接"""
+        if "+" not in hotkey:
+            code = KEY2CODE.get(hotkey.lower(), None)
+            if code is None:
+                raise KeyError(f"{hotkey} not belonging to hotkey")
+            return self.press_and_release_key_by_code(code)
+        for key in hotkey.split("+"):
+            if key not in KEY2CODE.keys():
+                self.input_string(key)
+                continue
+            self.press_key_by_code(KEY2CODE[key])
+        self.release_all_key()
