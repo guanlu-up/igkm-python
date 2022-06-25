@@ -27,6 +27,7 @@ class RFC(object):
         }
 
     def request(self, params: Union[dict, None] = None):
+        """向USB服务发送键盘指令"""
         params = params or {}
         headers = self.default_headers
         try:
