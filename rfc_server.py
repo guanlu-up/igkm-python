@@ -19,7 +19,7 @@ class RFC(object):
         }
 
     @staticmethod
-    def _error_response(status_code, result_message="server error", result=""):
+    def _error_response(status_code, result_message="server error", result=0):
         return {
             "resultCode": status_code,
             "resultMsg": result_message,
@@ -27,14 +27,16 @@ class RFC(object):
         }
 
     def request(self, params: Union[dict, None] = None):
-        """向USB服务发送键盘指令"""
+        """ 向USB服务发送键盘指令
+        :return:
+        """
         params = params or {}
         headers = self.default_headers
         try:
             response = requests.request(
                 "POST", self.url, headers=headers, json=params, timeout=(3, 30))
             if response.status_code == 200:
-                return response.json(), True
-            return self._error_response(response.status_code), False
+                return response.json()
+            return self._error_response(response.status_code)
         except Exception as error:
-            return self._error_response(500, str(error)), False
+            return self._error_response(500, str(error))
