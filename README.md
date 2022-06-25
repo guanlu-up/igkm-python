@@ -15,8 +15,8 @@
 ## 快速开始
 
 - 在要操作的电脑上插入幽灵键鼠
-- 在要操作的电脑上启动igkm.exe（igkmlib32.dll和igkm.exe在同级目录）
-- 安装依赖库,python调用
+- 在要操作的电脑上启动igkm.exe（./server/igkm.exe）
+- 安装依赖库,使用python调用
 
 ```shell
 # 安装依赖
@@ -25,27 +25,21 @@ pip install -r requirements.txt
 
 ```python
 if __name__ == '__main__':
-    from rfc import RFC
-    from mouse import Mouse
-    from device import Device
-
-    rfc = RFC("http://localhost:5000")
-    code = Device(rfc).is_device_connected()
-    print(f"code:{code}")
-    code = Mouse(rfc).is_mouse_pressed(3)
-    print(code)
+    from keyboard import BaseKeyboard
+    
+    key_action = BaseKeyboard()
+    key_action.input_string("123ABC")
+    key_action.press_and_release_key_by_code(13)
 ```
 
 ```python
 if __name__ == '__main__':
-    from rfc import RFC
-    from keyboard import KeyBoard
+    from keyboard import AgileKeyboard
 
-    rfc = RFC("http://localhost:5000")
-    code = KeyBoard(rfc).input_string("123")
-    print(code)
+    key_action = AgileKeyboard()
+    key_action.send_hotkey("ctrl+alt+delete")
 ```
 
 ### 键盘参照
 
-![mapper.png](mapper.png)
+![mapper](mapper.png)
