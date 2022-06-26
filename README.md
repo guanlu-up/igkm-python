@@ -24,20 +24,30 @@ pip install -r requirements.txt
 ```
 
 ```python
+"""键盘操作; 使用标准接口调用执行方法"""
 if __name__ == '__main__':
-    from keyboard import BaseKeyboard
-    
-    key_action = BaseKeyboard()
+    from keyboard import Keyboard
+
+    key_action = Keyboard()
     key_action.input_string("123ABC")
     key_action.press_and_release_key_by_code(13)
 ```
 
 ```python
+"""键盘操作; 使用封装后的灵活接口"""
 if __name__ == '__main__':
     from keyboard import AgileKeyboard
 
     key_action = AgileKeyboard()
     key_action.send_hotkey("ctrl+alt+delete")
+```
+
+```python
+"""鼠标操作; 使用标准接口"""
+if __name__ == "__main__":
+    from mouse import Mouse
+    mouse_action = Mouse()
+    mouse_action.press_and_release_mouse(code="1")
 ```
 
 ### 键盘参照
