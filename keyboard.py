@@ -2,7 +2,7 @@ import rfc_server
 from key_mapper import KEY2CODE
 
 
-class BaseKeyboard(object):
+class Keyboard(object):
     """键盘的模拟操作"""
 
     def __init__(self, server_url=None):
@@ -165,7 +165,7 @@ class BaseKeyboard(object):
         return response["result"]
 
 
-class AgileKeyboard(BaseKeyboard):
+class AgileKeyboard(Keyboard):
 
     def __init__(self, server_url=None, min_delay="300", max_delay="300"):
         """增加输入字符之间的延时"""
