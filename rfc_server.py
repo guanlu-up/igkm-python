@@ -6,7 +6,7 @@ class RFC(object):
     """与usb服务的通信"""
 
     def __init__(self, url=None):
-        localhost = "http://localhost:5000"
+        localhost = "http://localhost:5000/rfc"
         self.url = url or localhost
 
     def __call__(self, params: Union[dict, None] = None):
